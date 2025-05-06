@@ -1,0 +1,45 @@
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include "../util/util.h"
+
+using namespace std;
+
+int candy(std::vector<int> &ratings)
+{
+    int n = ratings.size();
+    std::vector<int> candies(n, 1);
+
+    for (int i = 1; i < n; ++i)
+    {
+        if (ratings[i] > ratings[i - 1])
+        {
+            candies[i] = candies[i - 1] + 1;
+        }
+    }
+
+    // printVector(candies);
+
+    for (int i = n - 2; i >= 0; --i)
+    {
+        if (ratings[i] > ratings[i + 1])
+        {
+            candies[i] = max(candies[i], candies[i + 1] + 1);
+        }
+    }
+    // printVector(candies);
+
+    int totalCandies = 0;
+    for (int candy : candies)
+    {
+        totalCandies += candy;
+    }
+
+    return totalCandies;
+}
+
+int main()
+{
+    vector<int> ratings = {1, 3, 4, 5, 2};
+    cout << candy(ratings) << endl;
+}
