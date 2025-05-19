@@ -12,22 +12,28 @@ class Solution
 public:
     vector<vector<int>> subsets(vector<int> &nums)
     {
-        if (nums.empty())
-        {
-            return {{}};
-        }
-        int n = nums.size();
-        int last = nums.back();
-        nums.pop_back();
-        vector<vector<int>> result = subsets(nums);
-        int s = result.size();
-        for (int i = 0; i < s; i++)
-        {
-            vector<int> temp = result[i];
-            temp.push_back(last);
-            result.push_back(temp);
-        }
+        vector<vector<int>> result;
+        vector<int> current;
+        backtrack(nums, 0, current, result);
         return result;
+    }
+
+private:
+    void backtrack(const vector<int> &nums, int start, vector<int> &current, vector<vector<int>> &result)
+    {
+        // Add the current subset to the result
+        result.push_back(current);
+
+        // Explore further by including each element from 'start' onwards
+        for (int i = start; i < nums.size(); ++i)
+        {
+            // Include nums[i] in the current subset
+            current.push_back(nums[i]);
+            // Recurse with the next index
+            backtrack(nums, i + 1, current, result);
+            // Backtrack: exclude nums[i] from the current subset
+            current.pop_back();
+        }
     }
 };
 
