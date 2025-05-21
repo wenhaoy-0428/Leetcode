@@ -44,7 +44,7 @@ public:
     string longestPalindrome(string s)
     {
         string mx = "";
-        for (int i = 0; i < s.size(); i++)
+        ` for (int i = 0; i < s.size(); i++)
         {
             string temp = helper(i, s);
             if (temp.size() > mx.size())
